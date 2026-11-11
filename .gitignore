@@ -29,4 +29,5 @@ build/
 .vscode/
 .idea/
 .DS_Store
-
+# Database backups
+backups/

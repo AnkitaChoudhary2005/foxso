@@ -27,7 +27,7 @@ function App() {
     const [productsLoading, setProductsLoading] = useState(true);
 
       useEffect(() => {
-      fetch("http://192.168.80.128:8000/products/")
+      fetch("/products/")
       .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch products");

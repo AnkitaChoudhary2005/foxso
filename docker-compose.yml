@@ -17,13 +17,13 @@ services:
       retries: 5
 
   backend:
-    build: ./backend
+    image: ankitachoudhary2005/foxso-backend:${FOXSO_IMAGE_TAG:-latest}
     container_name: foxso-backend
     restart: unless-stopped
     env_file:
       - ./backend/.env
     environment:
-        DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
       db:
         condition: service_healthy
@@ -31,7 +31,7 @@ services:
       - "8000"
 
   frontend:
-    build: ./frontend
+    image: ankitachoudhary2005/foxso-frontend:${FOXSO_IMAGE_TAG:-latest}
     container_name: foxso-frontend
     restart: unless-stopped
     ports:

@@ -1,0 +1,84 @@
+
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #30232a;
+  background: #fffafb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --fox-bg: #fffafb;
+  --fox-white: #ffffff;
+  --fox-pink: #a95775;
+  --fox-pink-light: #f8eaf0;
+  --fox-pink-soft: #fff5f8;
+  --fox-plum: #86435e;
+  --fox-text: #30232a;
+  --fox-muted: #927f87;
+  --fox-border: #f0e4e9;
+  --fox-green: #4d936c;
+  --fox-shadow: 0 8px 30px rgba(94, 47, 66, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--fox-bg);
+  color: var(--fox-text);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--fox-text);
+}
+
+::selection {
+  background: #f0d5df;
+  color: #54283b;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+

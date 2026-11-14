@@ -6,17 +6,17 @@ WORKDIR /app
 # Copy dependency files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies without lifecycle scripts
+RUN npm ci --ignore-scripts
 
 # Copy frontend source code
 COPY . .
 
-# Build production application
+# Build React application
 RUN npm run build
 
-# Stage 2: Serve using Nginx
-FROM nginx:alpine
+# Stage 2: Serve using unprivileged Nginx
+FROM nginxinc/nginx-unprivileged:alpine
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -24,6 +24,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy React production build
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+# Nginx listens on 8080
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]

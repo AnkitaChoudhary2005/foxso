@@ -1,26 +1,33 @@
+
 # Python base image
 FROM python:3.11-slim
+
+# Python environment settings
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 # Working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Copy locked dependencies
+COPY requirements.lock .
 
-# Copy requirements
-COPY requirements.txt .
+# Install exact dependency versions using binary packages
+RUN pip install --no-cache-dir --only-binary=:all: -r requirements.lock
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Create a non-root application user
+RUN addgroup --system appgroup && \
+    adduser --system --ingroup appgroup --home /app appuser
 
-# Copy application code
-COPY app/ ./app/
+# Copy application code with correct ownership
+COPY --chown=appuser:appgroup app/ ./app/
+
+# Run application as non-root user
+USER appuser
 
 # Backend port
 EXPOSE 8000
 
 # Start FastAPI
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+

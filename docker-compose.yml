@@ -18,6 +18,9 @@ services:
 
   backend:
     image: ankitachoudhary2005/foxso-backend:${FOXSO_IMAGE_TAG:-latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: foxso-backend
     restart: unless-stopped
     env_file:
@@ -32,10 +35,13 @@ services:
 
   frontend:
     image: ankitachoudhary2005/foxso-frontend:${FOXSO_IMAGE_TAG:-latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: foxso-frontend
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - backend
 
